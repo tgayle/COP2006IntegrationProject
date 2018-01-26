@@ -13,23 +13,34 @@ public class IntegrationProject {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Hello from the integration project!");
 		
+		//Module 2
 		System.out.println("What is your name?");
-		String inputName = input.nextLine();
+		String inputName = "Five Star Notebooks";//input.nextLine();
 		
 		System.out.println("What is your favorite number?");
-		int inputNum = input.nextInt();
-		input.nextLine();
+		int inputNum = 5; //input.nextInt();
+		//input.nextLine();
 		
-		System.out.print("USER: [");
-		
-		for (int i = 0; i < inputName.length(); i++)
 		{
-			System.out.print(inputName.toCharArray()[i]);
+			System.out.print("USER: [");
+			
+			String upperName = inputName.toUpperCase().trim();
+			for (int x = 0; x < upperName.length(); x++) {
+				char currentLetter = upperName.charAt(x);
+				
+				if (x != upperName.length()-1) {
+					System.out.print(currentLetter + ", ");
+				} else {
+					System.out.print(currentLetter);
+				}
+			}
+			System.out.print("]");
 		}
-		//System.out.println(inputName.toCharArray());
 		
-		System.out.println("]");
+		System.out.println((char)(20));
+	}
+	
+	void randomPrint(String message, long time) {
 		
 	}
-
 }
