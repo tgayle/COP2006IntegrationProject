@@ -42,3 +42,7 @@ class Dog {
 	String breed;
 	
 }
+
+class Dog2 {
+	//gotta know how to make a class on the next quiz 
+}
