@@ -6,86 +6,79 @@ import java.util.Scanner;
  * Integration Project
  */
 
-
 public class IntegrationProject {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Scanner input = new Scanner(System.in);
-		System.out.println("Hello from the integration project!");
-		
-		//Module 2
-		System.out.println("What is your name?");
-		String inputName = "Five Star Notebooks";//input.nextLine();
-		
-		System.out.println("What is your favorite number?");
-		int inputNum = 5; //input.nextInt();
-		//input.nextLine();
-		
-		{
-			System.out.print("USER: [");
-			
-			String upperName = inputName.toUpperCase().trim();
-			for (int x = 0; x < upperName.length(); x++) {
-				char currentLetter = upperName.charAt(x);
-				
-				if (x != upperName.length()-1) {
-					System.out.print(currentLetter + ", ");
-				} else {
-					System.out.print(currentLetter);
-				}
-			}
-			System.out.print("]");
-		}
-		
-		for (int x = 32; x < 123; x++) {
-			//System.out.println((char)(x));
-		}
-		
-		randomPrint(inputName, 4000);
-		
-		
-	}
-	
-	/*
-	 * int / int is always an int
-	 */
-	
-	static void randomPrint(String message, long time) {
-		int len = message.length();
-		long waiting = (time / len)/2;
-		int count = 0;
-		String progress = "";
-		System.out.println();
-		Random rand = new Random();
-		for (int i = 0; i < len; i++) {
-			int num = rand.nextInt(156) + 32;
-			progress += (char)(num);
-			
-			System.out.print((char)(num));
-			
-			try {
-				Thread.sleep(waiting);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-		System.out.print("\r\r");
-		for (int i = 0; i < len; i++) { //replace with real string
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
 
-			
-			System.out.print(message.charAt(i));
-			
-			try {
-				Thread.sleep(waiting);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-		//System.out.println(progress);
-	}
+        System.out.println("Hello from the integration project!");
+
+        System.out.print("Loading");
+        slowPrint("...........", 1600);
+
+        System.out.println("Please enter your name for login: ");
+        String inputName = "Five Star Notebooks";
+
+        System.out.println("Please enter a number of no particular relevance: ");
+        int inputNum = 5; // input.nextInt();
+        // input.nextLine(); //Move to next line to take inputs normally in the future.
+        
+        System.out.println("System debugging necessary. Press enter to continue.");
+        input.nextLine();
+
+        { //Print the user's name as an array.
+            String userMessage = "USER: [";
+            String upperName = inputName.toUpperCase().trim();
+
+            for (int x = 0; x < upperName.length(); x++) { //Loop over each character and print it.
+                char currentLetter = upperName.charAt(x);
+
+                if (x != upperName.length() - 1) {
+                    userMessage += (currentLetter + ", ");
+                } else {
+                    userMessage += (currentLetter + "]");
+                }
+
+            }
+
+            slowPrint(userMessage, 800L);
+        }
+        
+        System.out.println("Beginning core JRE check:");
+        waitTime(500);
+        System.out.println("Primitive types check:");
+        
+        System.out.println("byte: exists");
+        slowPrint("..........", 600L);
+        System.out.println("byte range was [-128, 127]");
+        
+        
+        
+
+    }
+
+    //Slowly prints the given message over the given time. Time is given in milliseconds so 1000ms 
+    //equals 1 second.
+    static void slowPrint(String message, long time) {
+        for (int i = 0; i < message.length(); i++) {
+
+            System.out.print(message.charAt(i));
+
+            waitTime(time / message.length());
+        }
+        System.out.println();
+    }
+    
+    static void waitTime(long time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    static void checkPrimitives() {
+        
+    }
+    
 }
