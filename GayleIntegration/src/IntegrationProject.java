@@ -50,6 +50,7 @@ public class IntegrationProject {
     System.out.println();
 
     long primitiveDatatypeCheckWaitLength = 300L;
+
     System.out.print("byte: exists");
     slowPrint("..........", primitiveDatatypeCheckWaitLength);
     System.out.println("byte " + String.format("range was [%d, %d]", Byte.MIN_VALUE, Byte.MAX_VALUE));
