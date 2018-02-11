@@ -1,7 +1,4 @@
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 /*
  * Travis Gayle
@@ -25,7 +22,17 @@ public class IntegrationProject {
     String inputName = input.nextLine();
 
     System.out.println("Please enter a number of no particular relevance: ");
-    int inputNum = input.nextInt();
+    int inputNum = 0;
+
+    while (!input.hasNextInt()) {
+      try {
+        inputNum = input.nextInt();
+      } catch (InputMismatchException e) {
+        System.out.println("Please enter a number: ");
+        input.next();
+      }
+    }
+
     input.nextLine(); //Move to next line to take inputs normally in the future.
 
     System.out.println("System debugging necessary. Press enter to continue.");
