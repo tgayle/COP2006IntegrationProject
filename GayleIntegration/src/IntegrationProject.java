@@ -3,12 +3,13 @@ import java.util.*;
 /*
  * Travis Gayle
  * Integration Project
+ * Main file to run. 
+ * Demonstration of concepts learned in COP2006
  */
 
 public class IntegrationProject {
-  static Scanner input = new Scanner(System.in);
-  static Random random = new Random();
-
+  private static Scanner input = new Scanner(System.in);
+  private static Random random = new Random();
 
   public static void main(String[] args) {
     random.setSeed(System.currentTimeMillis());
@@ -16,7 +17,7 @@ public class IntegrationProject {
     System.out.println("Hello from the integration project!");
 
     System.out.print("Loading");
-    slowPrint("...........", 1600); //Slowly print this given string over approx 1.6 seconds.
+    slowPrint("...........", 1600); // Slowly print this given string over approx 1.6 seconds.
 
     System.out.println("Please enter your name for login: ");
     String inputName = input.nextLine();
@@ -33,7 +34,7 @@ public class IntegrationProject {
       }
     }
 
-    input.nextLine(); //Move to next line to take inputs normally in the future.
+    input.nextLine(); // Move to next line to take inputs normally in the future.
 
     System.out.println("System debugging necessary. Press enter to continue.");
     input.nextLine();
@@ -51,11 +52,11 @@ public class IntegrationProject {
     System.out.println();
 
     // Print out primitive data types and their ranges.
-    for (PrimitiveTypeModel type : PrimitiveTypeModel.types) {
+    for (PrimitiveTypeModel type : PrimitiveTypeModel.getPrimitiveTypes()) {
       System.out.print(type.getType() + ": exists");
       slowPrint("..........", 300);
-      System.out.println(type.getType() + String.format(" range was [%s, %s]%n",
-          type.getMinValue(), type.getMaxValue()));
+      System.out.println(type.getType()
+          + String.format(" range was [%s, %s]%n", type.getMinValue(), type.getMaxValue()));
     }
 
     System.out.println("Primitive check complete.");
@@ -65,8 +66,9 @@ public class IntegrationProject {
     System.out.println("Would you like to play a game?");
     System.out.println("Yes or No?: ");
 
-    String playGameDecision = waitForCertainInput(new String[] {"y", "n", "yes", "no"}, "Please enter the proper input: ");
-    String[] yesDecisions = new String[] {"y", "yes"};
+    String playGameDecision = waitForCertainInput(new String[] { "y", "n", "yes", "no" },
+        "Please enter the proper input: ");
+    String[] yesDecisions = new String[] { "y", "yes" };
 
     if (Arrays.asList(yesDecisions).contains(playGameDecision)) {
       System.out.println("Continuing to game...");
@@ -88,7 +90,6 @@ public class IntegrationProject {
 
     input.close();
 
-
   }
 
   // Slowly appends the message to the current line over the given time.
@@ -108,7 +109,8 @@ public class IntegrationProject {
    */
   public static void waitTime(long time) {
     try {
-      Thread.sleep(time); // temporarily set to 0 instead of time to immediately print everything.
+      Thread.sleep(time); // temporarily set to 0 instead of time to immediately print
+                          // everything.
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
@@ -136,8 +138,10 @@ public class IntegrationProject {
 
   /**
    *
-   * @param checkFor an array of strings objects to check for against the scanner input.
-   * @param responseOnIncorrectInput What to print if the input is not correct.
+   * @param checkFor
+   *          an array of strings objects to check for against the scanner input.
+   * @param responseOnIncorrectInput
+   *          What to print if the input is not correct.
    * @return The string that was input to finish waiting.
    */
   public static String waitForCertainInput(String[] checkFor, String responseOnIncorrectInput) {
@@ -161,9 +165,11 @@ public class IntegrationProject {
 
   /**
    *
-   * @param num An instance of the Number class to print.
+   * @param num
+   *          : An instance of the Number class to print.
    */
-  public static String printNumber(Number num) { //Cast number back to Imaginary to print it properly?
+  public static String printNumber(Number num) { // Cast number back to Imaginary to print it
+                                                 // properly?
 
     if (num instanceof ImaginaryNumber) {
       System.out.println(((ImaginaryNumber) num).toString());
@@ -173,6 +179,14 @@ public class IntegrationProject {
       System.out.println(num.toString());
       return num.toString();
     }
+  }
+
+  public static Scanner getScanner() {
+    return input;
+  }
+
+  public static Random getRandom() {
+    return random;
   }
 
 }

@@ -25,10 +25,5 @@ public class ImaginaryNumber extends Number {
     return String.format("%s + %di", number, imaginaryNumber);
   }
 
-  public static void main(String[] args) {
-    Number num = new Number(8549848949L);
-    ImaginaryNumber imag = new ImaginaryNumber(num, 15);
-
-  }
 
 }
