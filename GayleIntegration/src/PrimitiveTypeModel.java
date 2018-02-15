@@ -59,4 +59,15 @@ public class PrimitiveTypeModel {
     return types;
   }
 
+
+  public static void main(String[] args) {
+    //For testing cases.
+    for (PrimitiveTypeModel type : PrimitiveTypeModel.getPrimitiveTypes()) {
+      System.out.print(type.getType() + ": exists");
+      IntegrationProject.slowPrint("..........", 300);
+      System.out.println(type.getType()
+          + String.format(" range was [%s, %s]%n", type.getMinValue(), type.getMaxValue()));
+    }
+  }
 }
+

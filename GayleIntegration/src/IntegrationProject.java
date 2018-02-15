@@ -17,7 +17,8 @@ public class IntegrationProject {
     System.out.println("Hello from the integration project!");
 
     System.out.print("Loading");
-    slowPrint("...........", 1600); // Slowly print this given string over approx 1.6 seconds.
+    slowPrint("...........", 1600);
+    // Slowly print this given string over 1.6 seconds.
 
     System.out.println("Please enter your name for login: ");
     String inputName = input.nextLine();
@@ -51,7 +52,16 @@ public class IntegrationProject {
     System.out.println("Primitive types check:");
     System.out.println();
 
-    // Print out primitive data types and their ranges.
+    /* Print out primitive data types and their ranges.
+     * byte has range from -128 to 127
+     * short has range from -32768 to 32767
+     * int has range from -2147483648 to 2147483647
+     * long has range from -9223372036854775808 to 9223372036854775807
+     * float has range from 1.4e-45 to 3.4028235e+38
+     * double has range from 4.94065645841e-324 to 1.79769313486e+308
+     * boolean has range from False to True
+     * char has range from \u0000 to \uffff
+     */
     for (PrimitiveTypeModel type : PrimitiveTypeModel.getPrimitiveTypes()) {
       System.out.print(type.getType() + ": exists");
       slowPrint("..........", 300);
@@ -92,48 +102,60 @@ public class IntegrationProject {
 
   }
 
-  // Slowly appends the message to the current line over the given time.
-  // Time is given in milliseconds so 1000ms equals 1 second.
+  /**
+   *
+   * @param message The string to print over the given period of time.
+   * @param time A period of time in milliseconds to spend printing the entire string.
+   */
   public static void slowPrint(String message, long time) {
     for (int i = 0; i < message.length(); i++) {
-
       System.out.print(message.charAt(i));
-
       waitTime(time / message.length());
     }
     System.out.println();
   }
 
-  /*
+  /**
+   * @param time a period of time in milliseconds to wait.
    * Waits a given period of time in milliseconds.
    */
   public static void waitTime(long time) {
     try {
-      Thread.sleep(time); // temporarily set to 0 instead of time to immediately print
-                          // everything.
+      Thread.sleep(time);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
   }
 
-  /*
-   * Takes a String and prints it over a given time in milliseconds.
+  /**
+   *
+   * @param str String to convert to an array format. Example: "Hello" -> "[H, e, l, l, o]"
+   * @return The string in an array form.
    */
-  public static String printStringAsArray(String str, long time) {
-    String userMessage = "[";
+  public static String convertStringToArray(String str) {
+    StringBuilder userMessage = new StringBuilder("[");
 
     for (int x = 0; x < str.length(); x++) { // Loop over each character and print it.
       char currentLetter = str.charAt(x);
 
       if (x != str.length() - 1) {
-        userMessage += (currentLetter + ", ");
+        userMessage.append(currentLetter + ", ");
       } else {
-        userMessage += (currentLetter + "]");
+        userMessage.append(currentLetter + "]");
       }
     }
 
-    slowPrint(userMessage, time);
-    return userMessage;
+    return userMessage.toString();
+  }
+
+  /**
+   *
+   * @param str The string to print over a period of time.
+   * @param time The amount of time, in milliseconds to take printing the string.
+   * @return void
+   */
+  public static void printStringAsArray(String str, long time) {
+    slowPrint(convertStringToArray(str), time);
   }
 
   /**
@@ -142,7 +164,7 @@ public class IntegrationProject {
    *          an array of strings objects to check for against the scanner input.
    * @param responseOnIncorrectInput
    *          What to print if the input is not correct.
-   * @return The string that was input to finish waiting.
+   * @return The string that was input and also in the checkFor array.
    */
   public static String waitForCertainInput(String[] checkFor, String responseOnIncorrectInput) {
     String scanInput = input.nextLine().toLowerCase().trim();
@@ -159,14 +181,19 @@ public class IntegrationProject {
     return scanInput;
   }
 
+  /**
+   *
+   * @param numberOfSides The max number to randomly generate.
+   * @return A random number from the range of 0 to numberOfSides
+   */
   public static int generateRandomNumber(int numberOfSides) {
     return random.nextInt(numberOfSides) + 1;
   }
 
   /**
    *
-   * @param num
-   *          : An instance of the Number class to print.
+   * @param num : An instance of the Number class to print.
+   * @return The toString() representation of a Number object.
    */
   public static String printNumber(Number num) { // Cast number back to Imaginary to print it
                                                  // properly?
