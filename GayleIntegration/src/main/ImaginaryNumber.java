@@ -1,6 +1,8 @@
+package main;
+
 /**
  * Created by Travis on 2/10/2018.
- * Class to model imaginary number and show an example of casting objects. Subclass of Number.java
+ * Class to model imaginary number and show an example of casting objects. Subclass of main.Number.java
  */
 public class ImaginaryNumber extends Number {
 
