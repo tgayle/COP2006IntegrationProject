@@ -19,6 +19,7 @@ public class ImaginaryNumber extends Number {
   }
 
   public ImaginaryNumber(Number num, long imaginary) {
+    super(num);
     this.number = num.number;
     this.imaginaryNumber = imaginary;
   }
@@ -27,6 +28,5 @@ public class ImaginaryNumber extends Number {
   public String toString() {
     return String.format("%s + %di", number, imaginaryNumber);
   }
-
 
 }

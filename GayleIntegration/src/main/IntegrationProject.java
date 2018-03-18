@@ -1,6 +1,10 @@
 package main;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 import tictactoe.TicTacToeGame;
 
 /*
@@ -25,12 +29,12 @@ public class IntegrationProject {
     // Slowly print this given string over 1.6 seconds.
 
     System.out.println("Please enter your name for login: ");
-    String inputName = input.nextLine();
+    String inputName = input.nextLine().trim();
 
     System.out.println("Please enter a number of no particular relevance: ");
     int inputNum = 0;
 
-    while (!input.hasNextInt()) {
+    while (!input.hasNextInt()) { //Repeat until the user enters a number.
       try {
         inputNum = input.nextInt();
       } catch (InputMismatchException e) {
@@ -47,7 +51,10 @@ public class IntegrationProject {
     // Print the user in an array format.
     System.out.print("USER: ");
     //Call the printStringAsArray method with the name the user gave in all uppercase over 600ms
-    printStringAsArray(inputName.toUpperCase().trim(), 600L);
+    printStringAsArray(inputName.toUpperCase(), 600L);
+
+    String reversedName = new StringBuilder(inputName.toUpperCase()).reverse().toString();
+    printStringAsArray(reversedName, 600L);
 
     System.out.println("Magic Random main.Number Generator: " + generateRandomNumber(6)
         + " out of 6.");
@@ -91,7 +98,6 @@ public class IntegrationProject {
     System.out.print("Imaginary main.Number class: ");
     printNumber(imagNumber);
 
-
     waitTime(1200L);
     System.out.println("Would you like to play a game?");
     System.out.println("Yes or No?: ");
@@ -106,7 +112,23 @@ public class IntegrationProject {
       System.out.println("Continuing to game anyways...");
     }
 
-    TicTacToeGame.startGame(input);
+    int finishedGameState = TicTacToeGame.startGame(input, inputName);
+    System.out.printf("Finished game with result %d.%n", finishedGameState);
+
+    int randomArrayTestNumber = generateRandomNumber(100);
+
+    int[] minimumNumberArray = {inputNum, finishedGameState, randomArrayTestNumber};
+    System.out.printf("Out of array with values %d, %d, and randomly generated number %d:%n"
+            + "the minimum was %d%n"
+            + "the maximum was %d%n"
+            + "and the sum of the array was %d%n"
+            + "max found at index %d",
+        inputNum, finishedGameState, randomArrayTestNumber,
+        findMinimumInArray(minimumNumberArray),
+        findMaximumInArray(minimumNumberArray),
+        sumArray(minimumNumberArray),
+        getIndexOf(minimumNumberArray, findMaximumInArray(minimumNumberArray)));
+
     input.close();
 
   }
@@ -209,7 +231,7 @@ public class IntegrationProject {
     // properly?
 
     if (num instanceof ImaginaryNumber) {
-      System.out.println(((ImaginaryNumber) num).toString());
+      System.out.println(num.add(num, new Number(123)));
       return ((ImaginaryNumber) num).toString();
 
     } else {
@@ -224,6 +246,46 @@ public class IntegrationProject {
 
   public static Random getRandom() {
     return random;
+  }
+  /*
+  All these classes are static since they are methods of the class, not of the object.
+  You also can't call a non-static method from a method that's static.
+   */
+  public static int findMinimumInArray(int[] array) {
+    int min = array[0];
+
+    for (int i = 0; i < array.length; i++) {
+      if (min > array[i]) {
+        min = array[i];
+      }
+    }
+    return min;
+  }
+
+  public static int findMaximumInArray(int[] array) {
+    int max = array[0];
+
+    for (int i = 0; i < array.length; i++) {
+      if (max < array[i]) {
+        max = array[i];
+      }
+    }
+    return max;
+  }
+
+  public static int sumArray(int[] arr) {
+    int sum = 0;
+    for (int i: arr) {
+      sum += i;
+    }
+    return sum;
+  }
+
+  public static int getIndexOf(int[] arr, int num) {
+    for (int i = 0; i < arr.length; i++) {
+      if (arr[i] == num) return i;
+    }
+    return -1;
   }
 
 }

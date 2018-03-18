@@ -19,8 +19,16 @@ public class Number {
     number = new BigDecimal(num);
   }
 
-  protected Number() {
+  protected Number(Number num) {
+    this.number = num.number;
+  }
 
+  public Number(BigDecimal num) {
+    this.number = num;
+  }
+
+  public Number add(Number one, Number two) {
+    return new Number(one.number.add(two.number));
   }
 
   @Override
