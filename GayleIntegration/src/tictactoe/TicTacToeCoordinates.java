@@ -10,7 +10,7 @@ public class TicTacToeCoordinates {
   private int x;
   private int y;
 
-  public TicTacToeCoordinates(int x, int y) {
+  TicTacToeCoordinates(int x, int y) {
     this.x = x;
     this.y = y;
   }

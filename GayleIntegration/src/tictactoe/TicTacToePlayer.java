@@ -9,12 +9,18 @@ package tictactoe;
 public class TicTacToePlayer {
 
   private String name;
-  private int score = 0;
+  private int score;
   private char representation;
+  private boolean isAi;
 
   public TicTacToePlayer(String name, char representingLetter) {
+    this(name, representingLetter, false);
+  }
+
+  public TicTacToePlayer(String name, char representingLetter, boolean isAi) {
     this.name = name;
     this.representation = representingLetter;
+    this.isAi = isAi;
   }
 
   public char getRepresentation() {
@@ -43,7 +49,21 @@ public class TicTacToePlayer {
     } else {
       return score;
     }
-
   }
 
+  public boolean isAi() {
+    return isAi;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof TicTacToePlayer) {
+      TicTacToePlayer otherPlayer = (TicTacToePlayer) obj;
+
+      return this.name.equals(otherPlayer.name)
+          && this.representation == otherPlayer.representation;
+    }
+
+    return false;
+  }
 }

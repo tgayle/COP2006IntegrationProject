@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 
 /**
  * Created by Travis on 2/10/2018.
- * Class to model Numbers and for showing example of casting objects.
+ * Class to model Numbers and for showing example of casting
+ * objects. Also a wrapper of BigDecimal
  */
 
 public class Number {
@@ -29,6 +30,18 @@ public class Number {
 
   public Number add(Number one, Number two) {
     return new Number(one.number.add(two.number));
+  }
+
+  public Number substract(Number n1, Number n2) {
+    return new Number(n1.number.subtract(n2.number));
+  }
+
+  public Number multiply(Number one, Number two) {
+    return new Number(one.number.multiply(two.number));
+  }
+
+  public Number divide(Number n1, Number n2) {
+    return new Number(n1.number.divide(n2.number));
   }
 
   @Override

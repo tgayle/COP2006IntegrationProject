@@ -7,18 +7,14 @@ package tictactoe;
  */
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
+import main.Constants;
 import main.IntegrationProject;
 
 
 public class TicTacToeGame {
 
-  static String[] yesDecisions = new String[] {"yes", "y"};
-  static List<String> yesDecisionArray = Arrays.asList(yesDecisions);
-
-  public static TicTacToePlayer getInfoForPlayer(Scanner input, String name) {
-//    System.out.println("Choose a single character to use for your marker? Leave black for 'X'");
+  private static TicTacToePlayer getInfoForPlayer(Scanner input, String name) {
     System.out.printf("%s, choose a single character to use for your marker. Leave blank for 'X'%n",
         name);
 
@@ -33,12 +29,13 @@ public class TicTacToeGame {
     }
 
     while (!confirmRepresentation) {
-      System.out.println(String.format("Do you want to use '%s' for your player?", playerRepresentation));
+      System.out
+          .println(String.format("Do you want to use '%s' for your player?", playerRepresentation));
       System.out.println("Yes or No?");
       String confirmed = IntegrationProject
-          .waitForCertainInput(new String[] { "yes", "no", "y", "n" }, "Yes or No? ");
+          .waitForCertainInput(Constants.CONFIRM_DECLINE_OPTIONS, "Yes or No? ");
 
-      if (Arrays.asList(yesDecisions).contains(confirmed)) {
+      if (Constants.YES_DECISIONS_LIST.contains(confirmed)) {
         confirmRepresentation = true;
 
       } else {
@@ -53,12 +50,19 @@ public class TicTacToeGame {
   private static TicTacToeCoordinates askForCoordinatesFromText(Scanner input) {
     String userInput = input.nextLine().trim();
 
-    //TODO: Print coords when user types 'coords'
+    boolean receivedGoodInput = false;
+    while (!receivedGoodInput) {
+      if (userInput.equalsIgnoreCase("coords")) {
+        TicTacToeBoard.printBoardCoords();
+        userInput = input.nextLine().trim();
+      } else if (!userInput.matches("\\(?\\d, ?\\d\\)?")) {
+        System.out.println("Incorrect format, please enter coordinates in an acceptable format.");
+        System.out.println("Example: '(1, 2)', '1, 2', or '1,2'");
+        userInput = input.nextLine().trim();
+      } else if (userInput.matches("\\(?\\d, ?\\d\\)?")) {
+        receivedGoodInput = true;
+      }
 
-    while (!userInput.matches("\\(?\\d, ?\\d\\)?")) {
-      System.out.println("Incorrect format, please enter coordinates in an acceptable format.");
-      System.out.println("Example: '(1, 2)', '1, 2', or '1,2'");
-      userInput = input.nextLine().trim();
     }
 
     userInput = userInput.replaceAll("\\(|\\)|\\ ", "");
@@ -90,10 +94,10 @@ public class TicTacToeGame {
       System.out.println("Are you sure this is your name?: " + playerName);
       System.out.println("Yes or No?");
       String confirmed = IntegrationProject
-          .waitForCertainInput(new String[] { "yes", "no", "y", "n" },
+          .waitForCertainInput(Constants.CONFIRM_DECLINE_OPTIONS,
               "Yes or No? ");
 
-      if (Arrays.asList(yesDecisions).contains(confirmed)) {
+      if (Constants.YES_DECISIONS_LIST.contains(confirmed)) {
         confirmedName = true;
       } else {
         System.out.println("What is your name?");
@@ -104,42 +108,47 @@ public class TicTacToeGame {
   }
 
   public static int startGame(Scanner input, String player1Name) {
+    String[] yesAiOptions = {"no", "ai", "bot"};
+    String[] humanPlayerOptions = {"yes", "human", "real"};
+    String[] playerSelectionOptions = new String[yesAiOptions.length + humanPlayerOptions.length];
+    System.arraycopy(yesAiOptions, 0, playerSelectionOptions, 0, humanPlayerOptions.length);
+    System.arraycopy(humanPlayerOptions, 0, playerSelectionOptions, yesAiOptions.length, humanPlayerOptions.length);
 
     TicTacToePlayer player1 = getInfoForPlayer(input, player1Name);
     TicTacToePlayer player2;
 
     boolean gameFinished = false;
-    boolean aiGame = false;
-    System.out.println("Will this be a two player game or would you like to play against an AI?");
-    if (yesDecisionArray.contains(input.nextLine())) {
+    System.out.println("Will this be a two player game or would you like to play against an AI? ('AI' or 'Other Player')");
+    String userSelection = IntegrationProject.waitForCertainInput(playerSelectionOptions, "Please try again and enter AI, or human.");
+
+    if (Arrays.asList(humanPlayerOptions).contains(userSelection)) {
+      //user selected human opponent.
       System.out.println("Enter the information below for player 2: ");
       player2 = getInfoForPlayer(input);
     } else {
       player2 = new TicTacToeAi();
-      aiGame = true;
     }
 
-    /**
-     * Game board is modeled as a 3x3 array:
-     * [][][]
-     * [][][]
-     * [][][]
-     */
     TicTacToeBoard gameBoard = new TicTacToeBoard(3, 3);
     gameBoard.printBoard();
-    System.out.println("Remember, if you ever want to see the coordinates for each point, just type 'coords'");
+    System.out.println(
+        "Remember, if you ever want to see the coordinates for each point, just type 'coords'");
     TicTacToePlayer currentPlayer = player1;
 
     while (!gameFinished) {
       if (!(currentPlayer instanceof TicTacToeAi)) {
-        System.out.printf("%s, enter the coordinates for your move. Or enter coords to see coordinates", currentPlayer.getName());
+        System.out
+            .printf("%s, enter the coordinates for your move. Or enter coords to see coordinates",
+                currentPlayer.getName());
         TicTacToeCoordinates playerCoords = pollForSelectedCoordinates(input);
-        boolean successfulMove = gameBoard.updatePosition(playerCoords, currentPlayer.getRepresentation());
+        boolean successfulMove = gameBoard
+            .updatePosition(playerCoords, currentPlayer.getRepresentation());
 
         while (!successfulMove) {
           System.out.println("A player has already made a move there. Pick somewhere else.");
           gameBoard.printBoard();
-          successfulMove = gameBoard.updatePosition(pollForSelectedCoordinates(input), currentPlayer.getRepresentation());
+          successfulMove = gameBoard
+              .updatePosition(pollForSelectedCoordinates(input), currentPlayer.getRepresentation());
         }
         //player completed his move.
       } else {
@@ -151,23 +160,41 @@ public class TicTacToeGame {
       currentPlayer = (currentPlayer == player1) ? player2 : player1;
     }
 
+    //Game has finished.
+
+
     StringBuilder winText = new StringBuilder();
     winText.append("#############");
 
     for (int i = 0; i < 4; i++) {
       if (i % 2 == 0) {
         System.out.println(winText.toString());
-        winText.delete(0 ,3);
+        winText.delete(0, 3);
       } else {
         System.out.println(winText.toString());
-        winText.insert(0, "####", 0 ,3);
+        winText.insert(0, "####", 0, 3);
       }
     }
 
-    TicTacToePlayer winningPlayer = (currentPlayer == player1) ? player2 : player1;
-    System.out.printf("Congrats %s! You won!%n", winningPlayer.getName());
+    TicTacToePlayer winningPlayer = findWinnerFromChar(gameBoard.findWinner(), player1, player2);
+    if (winningPlayer == null) {
+      System.out.println("It's a tie! Great playing!");
+    } else {
+      TicTacToePlayer losingPlayer = (winningPlayer.equals(player1) ? player2 : player1);
+      if (!winningPlayer.isAi()) {
+        System.out.printf("Congrats %s! You won and beat %s!%n", winningPlayer.getName(), losingPlayer.getName());
+
+      } else {
+        System.out.printf("%s won!", winningPlayer.getName());
+      }
+    }
 
     return 0;
 
+  }
+
+  static private TicTacToePlayer findWinnerFromChar(char winningChar, TicTacToePlayer p1, TicTacToePlayer p2) {
+    if (winningChar == 0) return null;
+    return p1.getRepresentation() == winningChar ? p1 : p2;
   }
 }

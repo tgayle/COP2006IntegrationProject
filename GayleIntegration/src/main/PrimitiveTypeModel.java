@@ -31,8 +31,8 @@ public class PrimitiveTypeModel {
   private static PrimitiveTypeModel charType = new PrimitiveTypeModel("char",
       "" + Character.MIN_VALUE, "" + Character.MAX_VALUE);
 
-  private static final PrimitiveTypeModel[] types = new PrimitiveTypeModel[] { byteType, shortType,
-      intType, longType, floatType, doubleType, booleanType, charType };
+  private static final PrimitiveTypeModel[] types = new PrimitiveTypeModel[]{byteType, shortType,
+      intType, longType, floatType, doubleType, booleanType, charType};
 
   private String type;
   private String minValue;

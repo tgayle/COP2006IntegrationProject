@@ -12,11 +12,11 @@ import main.IntegrationProject;
 public class TicTacToeAi extends TicTacToePlayer {
 
   public TicTacToeAi(String name, char representingLetter) {
-    super(name, representingLetter);
+    super(name, representingLetter, true);
   }
 
-  public TicTacToeAi() {
-    super("AI", 'O');
+  TicTacToeAi() {
+    super("AI", 'O', true);
   }
 
   public TicTacToeCoordinates makeMove(TicTacToeBoard board) {

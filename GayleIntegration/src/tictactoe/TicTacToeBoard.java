@@ -6,7 +6,7 @@ import java.util.List;
 /*
  * Travis Gayle
  * Integration Project
- * Wrapper for char[][] to represent a game board.
+ * Wrapper for a char[][] to represent a game board.
  */
 public class TicTacToeBoard {
 
@@ -14,20 +14,21 @@ public class TicTacToeBoard {
   private int boardWidth;
   private char[][] board;
 
-  public static final String boardCoordPreview =
-      "---+---+---\n"
+  private static final String boardCoordPreview =
+      "\n"
           + " {0,0}  | {0,1}  | {0,2} \n"
           + "---+---+---\n"
           + " {1,0}  | {1,1}  | {1,2} \n"
           + "---+---+---\n"
-          + " {2,0}  | {2,1}  | {2,2} \n"
-          + "---+---+---";
+          + " {2,0}  | {2,1}  | {2,2} \n";
 
   private static final TicTacToeCoordinates[] leftToBottomDiagonals =
-      {new TicTacToeCoordinates(0, 0), new TicTacToeCoordinates(1, 1), new TicTacToeCoordinates(2, 2)};
+      {new TicTacToeCoordinates(0, 0), new TicTacToeCoordinates(1, 1),
+          new TicTacToeCoordinates(2, 2)};
 
   private static final TicTacToeCoordinates[] leftToTopRightDiagonals =
-      {new TicTacToeCoordinates(0, 2), new TicTacToeCoordinates(1, 1), new TicTacToeCoordinates(2, 0)};
+      {new TicTacToeCoordinates(0, 2), new TicTacToeCoordinates(1, 1),
+          new TicTacToeCoordinates(2, 0)};
 
   public TicTacToeBoard(int boardLength, int boardWidth) {
     this.boardLength = boardLength;
@@ -39,33 +40,33 @@ public class TicTacToeBoard {
     return board;
   }
 
-  public char[] getTopRow() {
+  private char[] getTopRow() {
     char[] row = new char[boardLength];
     System.arraycopy(board[0], 0, row, 0, boardLength);
     return row;
   }
 
-  public char[] getMidRow() {
+  private char[] getMidRow() {
     char[] row = new char[boardLength];
     System.arraycopy(board[1], 0, row, 0, boardLength);
     return row;
   }
 
-  public char[] getVerticalMidRow() {
-    return new char[] {board[0][1], board[1][1], board[2][1]};
+  private char[] getVerticalMidRow() {
+    return new char[]{board[0][1], board[1][1], board[2][1]};
   }
 
-  public char[] getLowRow(){
+  private char[] getLowRow() {
     char[] row = new char[boardLength];
     System.arraycopy(board[2], 0, row, 0, boardLength);
     return row;
   }
 
-  public char getFromCoordinates(int x, int y) {
+  private char getFromCoordinates(int x, int y) {
     return board[x][y];
   }
 
-  public char getFromCoordinates(TicTacToeCoordinates coord) {
+  private char getFromCoordinates(TicTacToeCoordinates coord) {
     return board[coord.getX()][coord.getY()];
   }
 
@@ -73,7 +74,7 @@ public class TicTacToeBoard {
     return updatePosition(coords.getX(), coords.getY(), playerRepresentation);
   }
 
-  public boolean updatePosition(int x, int y, char playerRepresentation) {
+  private boolean updatePosition(int x, int y, char playerRepresentation) {
     if (getFromCoordinates(x, y) != '\u0000') {
       return false;
     }
@@ -105,7 +106,6 @@ public class TicTacToeBoard {
           System.out.print(String.format(" %s ", currentPlace));
         }
 
-
         if (y != 2) {
           System.out.print("|");
         }
@@ -115,12 +115,34 @@ public class TicTacToeBoard {
     }
   }
 
-  private boolean checkRowVictory(char[] row) {
+  private char checkRowVictory(char[] row) {
     char rowChar = row[0];
-    if (rowChar == 0) return false;
+    if (rowChar == 0) {
+      return 0;
+    }
     for (char aRow : row) {
       if (rowChar != aRow) {
-        return false;
+        return 0;
+      }
+    }
+    return rowChar;
+  }
+
+  private char isRowEmpty(char[] row) {
+    for (char c : row) {
+      if (c == 0) {
+        return 0;
+      }
+    }
+    return row[0];
+  }
+
+  private boolean isBoardFilled() { //Return true if there are no open spots on the board.
+    for (char[] y : board) {
+      for (char xy : y) {
+        if (xy == 0) {
+          return false;
+        }
       }
     }
     return true;
@@ -133,38 +155,62 @@ public class TicTacToeBoard {
     boolean failedLeftToBottomDiag = false;
     boolean failedLeftToTopDiag = false;
 
-    for (TicTacToeCoordinates coord: leftToBottomDiagonals) {
+    for (TicTacToeCoordinates coord : leftToBottomDiagonals) {
       if (leftToBottomChar != getFromCoordinates(coord)) {
         failedLeftToBottomDiag = true;
         break;
       }
     }
 
-    for (TicTacToeCoordinates coord: leftToTopRightDiagonals) {
+    for (TicTacToeCoordinates coord : leftToTopRightDiagonals) {
       if (leftToTopChar != getFromCoordinates(coord)) {
         failedLeftToTopDiag = true;
         break;
       }
     }
 
-    if (!failedLeftToBottomDiag) return leftToBottomChar;
-    if (!failedLeftToTopDiag) return leftToTopChar;
+    if (!failedLeftToBottomDiag) {
+      return leftToBottomChar;
+    }
+    if (!failedLeftToTopDiag) {
+      return leftToTopChar;
+    }
 
     return 0;
   }
 
-  public boolean isGameFinished() {
-    if (checkDiagonalVictory() != 0) return true;
+  private boolean checkBoardVictory() { //Check if any of the rows are winners.
+    boolean topRowStatus = checkRowVictory(getTopRow()) != 0;
+    boolean midRowStatus = checkRowVictory(getMidRow()) != 0;
+    boolean vertMidStatus = checkRowVictory(getVerticalMidRow()) != 0;
+    boolean lowRowStatus = checkRowVictory(getLowRow()) != 0;
 
-    boolean topRowStatus = checkRowVictory(getTopRow());
-    boolean midRowStatus = checkRowVictory(getMidRow());
-    boolean vertMidStatus = checkRowVictory(getVerticalMidRow());
-    boolean lowRowStatus = checkRowVictory(getLowRow());
-//    System.out.printf("%s %s %s", topRowStatus, midRowStatus, lowRowStatus);
     return topRowStatus || midRowStatus || vertMidStatus || lowRowStatus;
   }
 
+  public boolean isGameFinished() {
+    return checkDiagonalVictory() != 0 || checkBoardVictory() || isBoardFilled();
+  }
+
+  public char findWinner() {
+    char[] winners = {
+        checkRowVictory(getTopRow()),
+        checkRowVictory(getMidRow()),
+        checkRowVictory(getLowRow()),
+        checkRowVictory(getVerticalMidRow()),
+        checkDiagonalVictory()
+    };
+
+    for (char winner : winners) {
+      if (winner != 0) {
+        return winner;
+      }
+    }
+
+    return 0;
+  }
+
   public static void printBoardCoords() {
-    System.out.print(boardCoordPreview);
+    System.out.println(boardCoordPreview);
   }
 }

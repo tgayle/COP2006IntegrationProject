@@ -15,6 +15,7 @@ import tictactoe.TicTacToeGame;
  */
 
 public class IntegrationProject {
+
   private static Scanner input = new Scanner(System.in);
   private static Random random = new Random();
 
@@ -98,15 +99,16 @@ public class IntegrationProject {
     System.out.print("Imaginary main.Number class: ");
     printNumber(imagNumber);
 
+    int randomArrayTestNumber = generateRandomNumber(100);
+
     waitTime(1200L);
     System.out.println("Would you like to play a game?");
     System.out.println("Yes or No?: ");
 
-    String playGameDecision = waitForCertainInput(new String[] { "y", "n", "yes", "no" },
+    String playGameDecision = waitForCertainInput(Constants.CONFIRM_DECLINE_OPTIONS,
         "Please enter the proper input: ");
-    String[] yesDecisions = new String[] { "y", "yes" };
 
-    if (Arrays.asList(yesDecisions).contains(playGameDecision)) {
+    if (Arrays.asList(Constants.YES_DECISIONS).contains(playGameDecision)) {
       System.out.println("Continuing to game...");
     } else {
       System.out.println("Continuing to game anyways...");
@@ -114,8 +116,6 @@ public class IntegrationProject {
 
     int finishedGameState = TicTacToeGame.startGame(input, inputName);
     System.out.printf("Finished game with result %d.%n", finishedGameState);
-
-    int randomArrayTestNumber = generateRandomNumber(100);
 
     int[] minimumNumberArray = {inputNum, finishedGameState, randomArrayTestNumber};
     System.out.printf("Out of array with values %d, %d, and randomly generated number %d:%n"
@@ -134,7 +134,6 @@ public class IntegrationProject {
   }
 
   /**
-   *
    * @param message The string to print over the given period of time.
    * @param time A period of time in milliseconds to spend printing the entire string.
    */
@@ -148,19 +147,18 @@ public class IntegrationProject {
   }
 
   /**
-   * @param time a period of time in milliseconds to wait.
-   * Waits a given period of time in milliseconds.
+   * @param time a period of time in milliseconds to wait. Waits a given period of time in
+   * milliseconds.
    */
   public static void waitTime(long time) {
     try {
-      Thread.sleep(time);
+      Thread.sleep(0); //time
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
   }
 
   /**
-   *
    * @param str String to convert to an array format. Example: "Hello" -> "[H, e, l, l, o]"
    * @return The string in an array form.
    */
@@ -181,7 +179,6 @@ public class IntegrationProject {
   }
 
   /**
-   *
    * @param str The string to print over a period of time.
    * @param time The amount of time, in milliseconds to take printing the string.
    * @return void
@@ -191,11 +188,8 @@ public class IntegrationProject {
   }
 
   /**
-   *
-   * @param checkFor
-   *          an array of strings objects to check for against the scanner input.
-   * @param responseOnIncorrectInput
-   *          What to print if the input is not correct.
+   * @param checkFor an array of strings objects to check for against the scanner input.
+   * @param responseOnIncorrectInput What to print if the input is not correct.
    * @return The string that was input and also in the checkFor array.
    */
   public static String waitForCertainInput(String[] checkFor, String responseOnIncorrectInput) {
@@ -214,7 +208,6 @@ public class IntegrationProject {
   }
 
   /**
-   *
    * @param numberOfSides The max number to randomly generate.
    * @return A random number from the range of 0 to numberOfSides
    */
@@ -223,7 +216,6 @@ public class IntegrationProject {
   }
 
   /**
-   *
    * @param num : An instance of the main.Number class to print.
    * @return The toString() representation of a main.Number object.
    */
@@ -247,6 +239,7 @@ public class IntegrationProject {
   public static Random getRandom() {
     return random;
   }
+
   /*
   All these classes are static since they are methods of the class, not of the object.
   You also can't call a non-static method from a method that's static.
@@ -275,7 +268,7 @@ public class IntegrationProject {
 
   public static int sumArray(int[] arr) {
     int sum = 0;
-    for (int i: arr) {
+    for (int i : arr) {
       sum += i;
     }
     return sum;
@@ -283,7 +276,9 @@ public class IntegrationProject {
 
   public static int getIndexOf(int[] arr, int num) {
     for (int i = 0; i < arr.length; i++) {
-      if (arr[i] == num) return i;
+      if (arr[i] == num) {
+        return i;
+      }
     }
     return -1;
   }
