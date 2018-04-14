@@ -8,9 +8,9 @@ import src.net.jsonmodels.SeriesJSONModel;
 
 public class WebAPIIntegration {
 
-  static String[] series = {"0x000"};
+  private static String[] series = {"0x000"};
 
-  public static int run(APICallbackInterface callback) {
+  public static void runAmiiboAPI(APICallbackInterface callback) {
     AtomicInteger apiResult = new AtomicInteger(0); //use this to track the result of this api call.
 
     System.out.println("Checking Amiibo Information");
@@ -35,7 +35,7 @@ public class WebAPIIntegration {
                   });
                   System.out.println();
                 });
-                callback.onComplete(apiResult.get());
+                callback.onApiRequestComplete(apiResult.get());
               }
             }
 
@@ -44,12 +44,11 @@ public class WebAPIIntegration {
               System.out.println(
                   "Error loading amiibo info. Is it possible that there's something wrong with your connection?");
               apiResult.set(-1);
-              callback.onComplete(apiResult.get());
+              callback.onApiRequestComplete(apiResult.get());
             }
           });
     }
 
-    return apiResult.get();
   }
 
   private static String expandRegionCode(String code) {

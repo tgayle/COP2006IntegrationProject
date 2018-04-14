@@ -8,6 +8,7 @@ package src.tictactoe;
 
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.function.Predicate;
 import src.Constants;
 import src.IntegrationProject;
 
@@ -108,8 +109,8 @@ public class TicTacToeGame {
   }
 
   public static int startGame(Scanner input, String player1Name) {
-    String[] yesAiOptions = {"no", "ai", "bot"};
-    String[] humanPlayerOptions = {"yes", "human", "real"};
+    String[] yesAiOptions = {"no", "ai", "bot", "robot"};
+    String[] humanPlayerOptions = {"yes", "human", "real", "other player"};
     String[] playerSelectionOptions = new String[yesAiOptions.length + humanPlayerOptions.length];
     System.arraycopy(yesAiOptions, 0, playerSelectionOptions, 0,
         humanPlayerOptions.length);
@@ -204,4 +205,5 @@ public class TicTacToeGame {
     }
     return p1.getRepresentation() == winningChar ? p1 : p2;
   }
+
 }

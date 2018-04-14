@@ -1,8 +1,6 @@
 package src;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -10,6 +8,8 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import src.net.APICallbackInterface;
 import src.net.WebAPIIntegration;
 import src.number.ImaginaryNumber;
 import src.number.Number;
@@ -18,7 +18,7 @@ import src.tictactoe.TicTacToeGame;
 /*
  * Travis Gayle
  * Integration Project
- * Main file to run.
+ * Main file to runAmiiboAPI.
  * Demonstration of concepts learned in COP2006
  */
 
@@ -44,7 +44,9 @@ public class IntegrationProject {
       while (!givenProperName) { //Repeat until the user enters a number.
         try {
           inputName = input.nextLine().trim();
-          if (inputName.length() == 0) throw new InputMismatchException();
+          if (inputName.length() == 0) {
+            throw new InputMismatchException();
+          }
           givenProperName = true;
         } catch (InputMismatchException e) {
           System.out.println("Please enter your name: ");
@@ -78,8 +80,9 @@ public class IntegrationProject {
     printStringAsArray(reversedName, 600L);
 
     LocalDateTime currentTime = LocalDateTime.now(ZoneId.systemDefault());
-    String currentTimeAsString = currentTime.format(DateTimeFormatter.ofPattern("MMMM dd yyyy hh:mm:ssa").withZone(
-        ZoneId.systemDefault()));
+    String currentTimeAsString = currentTime
+        .format(DateTimeFormatter.ofPattern("MMMM dd yyyy hh:mm:ssa").withZone(
+            ZoneId.systemDefault()));
     System.out.println("Current Time: " + currentTimeAsString);
 
     System.out.println("Magic Random Number Generator: " + generateRandomNumber(6)
@@ -154,8 +157,19 @@ public class IntegrationProject {
     System.out.println("Proceeding to get Nintendo Amiibo Information Online");
     System.out.println("Press enter to continue");
     input.nextLine();
+
     WebAPIIntegration
-        .run(result -> System.out.println("Amiibo API Request ended with result " + result));
+        .runAmiiboAPI(result -> System.out.println("Amiibo API Request ended with result " + result));
+
+    System.out.println("Comparing primitive types and max values.");
+    List<PrimitiveTypeModel> typesThanHandleGivenNum = Arrays
+        .stream(PrimitiveTypeModel.getPrimitiveTypes()).filter(PrimitiveTypeModel.canHandleNumber(500))
+        .collect(Collectors.toList());
+
+    typesThanHandleGivenNum.forEach(type -> {
+      System.out.printf("Type %s could fit %d%n", type.getType(), 500);
+    });
+
     input.close();
 
   }
@@ -176,10 +190,11 @@ public class IntegrationProject {
   /**
    * @param time a period of time in milliseconds to wait. Waits a given period of time in
    * milliseconds.
+   * Checked exception
    */
   public static void waitTime(long time) {
     try {
-      Thread.sleep(time); //time
+      Thread.sleep(0); //time
     } catch (InterruptedException e) {
       e.printStackTrace();
     }

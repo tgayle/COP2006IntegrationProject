@@ -13,13 +13,14 @@ public class TicTacToeBoard {
   private static final String boardCoordPreview =
       "\n"
           + " {0,0}  | {0,1}  | {0,2} \n"
-          + "---+---+---\n"
+          + "--------+--------+-------\n"
           + " {1,0}  | {1,1}  | {1,2} \n"
-          + "---+---+---\n"
+          + "--------+--------+-------\n"
           + " {2,0}  | {2,1}  | {2,2} \n";
   private static final TicTacToeCoordinates[] leftToBottomDiagonals =
       {new TicTacToeCoordinates(0, 0), new TicTacToeCoordinates(1, 1),
           new TicTacToeCoordinates(2, 2)};
+
   private static final TicTacToeCoordinates[] leftToTopRightDiagonals =
       {new TicTacToeCoordinates(0, 2), new TicTacToeCoordinates(1, 1),
           new TicTacToeCoordinates(2, 0)};
@@ -27,7 +28,7 @@ public class TicTacToeBoard {
   private int boardWidth;
   private char[][] board;
 
-  public TicTacToeBoard(int boardLength, int boardWidth) {
+  TicTacToeBoard(int boardLength, int boardWidth) {
     this.boardLength = boardLength;
     this.boardWidth = boardWidth;
     board = new char[boardLength][boardWidth];

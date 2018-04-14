@@ -5,6 +5,10 @@ package src;
  * Model class for primitive data types. Used for showing primitive types and their capacities.
  */
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.function.Predicate;
+
 public class PrimitiveTypeModel {
 
   private static PrimitiveTypeModel byteType = new PrimitiveTypeModel("byte", "" + Byte.MIN_VALUE,
@@ -31,14 +35,14 @@ public class PrimitiveTypeModel {
   private static PrimitiveTypeModel charType = new PrimitiveTypeModel("char",
       "" + Character.MIN_VALUE, "" + Character.MAX_VALUE);
 
-  private static final PrimitiveTypeModel[] types = new PrimitiveTypeModel[]{byteType, shortType,
-      intType, longType, floatType, doubleType, booleanType, charType};
+  private static final PrimitiveTypeModel[] types = new PrimitiveTypeModel[]
+      {byteType, shortType, intType, longType, floatType, doubleType, booleanType, charType};
 
   private String type;
   private String minValue;
   private String maxValue;
 
-  PrimitiveTypeModel(String type, String minValue, String maxValue) {
+  private PrimitiveTypeModel(String type, String minValue, String maxValue) {
     this.type = type;
     this.minValue = minValue;
     this.maxValue = maxValue;
@@ -58,6 +62,18 @@ public class PrimitiveTypeModel {
 
   String getMinValue() {
     return minValue;
+  }
+
+  /*
+  Predicate lambda returns true if the given type can handle the given number.
+   */
+  public static Predicate<PrimitiveTypeModel> canHandleNumber(long num) {
+    return type -> {
+      if (type.type.equals("boolean") || type.type.equals("char")) return false;
+      BigDecimal given = new BigDecimal(type.maxValue);
+      BigDecimal givenNum = BigDecimal.valueOf(num);
+      return given.compareTo(givenNum) >= 0;
+    };
   }
 
 }

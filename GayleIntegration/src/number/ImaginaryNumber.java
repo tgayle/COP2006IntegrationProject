@@ -6,7 +6,7 @@ package src.number;
  */
 public class ImaginaryNumber extends Number {
 
-  long imaginaryNumber;
+  protected long imaginaryNumber;
 
   public ImaginaryNumber(String rationalNumber, long imaginary) {
     super(rationalNumber);

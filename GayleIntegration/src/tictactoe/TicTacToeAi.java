@@ -4,6 +4,9 @@ package src.tictactoe;
  * Travis Gayle
  * Integration Project
  * AI class for TicTacToe game when a player does not have another player to play against.
+ *
+ *This class is a subclass of TicTacToePlayer, ensuring that it can be used anywhere a normal
+ * player can be used, while also allowing us to add special functionality as an AI player.
  */
 
 import java.util.List;
@@ -18,6 +21,11 @@ public class TicTacToeAi extends TicTacToePlayer {
 
   TicTacToeAi() {
     super("AI", 'O', true);
+  }
+
+  @Override
+  public boolean isAi() {
+    return true;
   }
 
   public TicTacToeCoordinates makeMove(TicTacToeBoard board) {
