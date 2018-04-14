@@ -1,4 +1,4 @@
-package tictactoe;
+package src.tictactoe;
 
 /*
  * Travis Gayle
@@ -27,12 +27,12 @@ public class TicTacToePlayer {
     return representation;
   }
 
-  public String getName() {
-    return name;
-  }
-
   public void setRepresentation(char representation) {
     this.representation = representation;
+  }
+
+  public String getName() {
+    return name;
   }
 
   public void setName(String name) {
@@ -55,13 +55,15 @@ public class TicTacToePlayer {
     return isAi;
   }
 
+
   @Override
   public boolean equals(Object obj) {
     if (obj instanceof TicTacToePlayer) {
       TicTacToePlayer otherPlayer = (TicTacToePlayer) obj;
 
       return this.name.equals(otherPlayer.name)
-          && this.representation == otherPlayer.representation;
+          && this.representation == otherPlayer.representation
+          && this.isAi == otherPlayer.isAi;
     }
 
     return false;

@@ -1,4 +1,4 @@
-package tictactoe;
+package src.tictactoe;
 
 /*
  * Travis Gayle
@@ -7,12 +7,13 @@ package tictactoe;
  */
 
 import java.util.List;
-import main.IntegrationProject;
+import src.IntegrationProject;
 
 public class TicTacToeAi extends TicTacToePlayer {
 
   public TicTacToeAi(String name, char representingLetter) {
     super(name, representingLetter, true);
+
   }
 
   TicTacToeAi() {

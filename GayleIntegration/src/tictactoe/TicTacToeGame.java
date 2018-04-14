@@ -1,4 +1,4 @@
-package tictactoe;
+package src.tictactoe;
 
 /*
  * Travis Gayle
@@ -8,8 +8,8 @@ package tictactoe;
 
 import java.util.Arrays;
 import java.util.Scanner;
-import main.Constants;
-import main.IntegrationProject;
+import src.Constants;
+import src.IntegrationProject;
 
 
 public class TicTacToeGame {
@@ -111,15 +111,20 @@ public class TicTacToeGame {
     String[] yesAiOptions = {"no", "ai", "bot"};
     String[] humanPlayerOptions = {"yes", "human", "real"};
     String[] playerSelectionOptions = new String[yesAiOptions.length + humanPlayerOptions.length];
-    System.arraycopy(yesAiOptions, 0, playerSelectionOptions, 0, humanPlayerOptions.length);
-    System.arraycopy(humanPlayerOptions, 0, playerSelectionOptions, yesAiOptions.length, humanPlayerOptions.length);
+    System.arraycopy(yesAiOptions, 0, playerSelectionOptions, 0,
+        humanPlayerOptions.length);
+    System.arraycopy(humanPlayerOptions, 0, playerSelectionOptions, yesAiOptions.length,
+        humanPlayerOptions.length); //copy all the options into one large array
 
     TicTacToePlayer player1 = getInfoForPlayer(input, player1Name);
     TicTacToePlayer player2;
 
     boolean gameFinished = false;
-    System.out.println("Will this be a two player game or would you like to play against an AI? ('AI' or 'Other Player')");
-    String userSelection = IntegrationProject.waitForCertainInput(playerSelectionOptions, "Please try again and enter AI, or human.");
+    System.out.println(
+        "Will this be a two player game or would you like to play against an AI?"
+            + " ('AI' or 'Other Player')");
+    String userSelection = IntegrationProject
+        .waitForCertainInput(playerSelectionOptions, "Please try again and enter AI, or human.");
 
     if (Arrays.asList(humanPlayerOptions).contains(userSelection)) {
       //user selected human opponent.
@@ -161,8 +166,6 @@ public class TicTacToeGame {
     }
 
     //Game has finished.
-
-
     StringBuilder winText = new StringBuilder();
     winText.append("#############");
 
@@ -182,7 +185,8 @@ public class TicTacToeGame {
     } else {
       TicTacToePlayer losingPlayer = (winningPlayer.equals(player1) ? player2 : player1);
       if (!winningPlayer.isAi()) {
-        System.out.printf("Congrats %s! You won and beat %s!%n", winningPlayer.getName(), losingPlayer.getName());
+        System.out.printf("Congrats %s! You won and beat %s!%n", winningPlayer.getName(),
+            losingPlayer.getName());
 
       } else {
         System.out.printf("%s won!", winningPlayer.getName());
@@ -193,8 +197,11 @@ public class TicTacToeGame {
 
   }
 
-  static private TicTacToePlayer findWinnerFromChar(char winningChar, TicTacToePlayer p1, TicTacToePlayer p2) {
-    if (winningChar == 0) return null;
+  static private TicTacToePlayer findWinnerFromChar(char winningChar, TicTacToePlayer p1,
+      TicTacToePlayer p2) {
+    if (winningChar == 0) {
+      return null;
+    }
     return p1.getRepresentation() == winningChar ? p1 : p2;
   }
 }
