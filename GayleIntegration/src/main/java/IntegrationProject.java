@@ -138,17 +138,25 @@ public class IntegrationProject {
     String playGameDecision = waitForCertainInput(Constants.CONFIRM_DECLINE_OPTIONS_LIST,
         "Please enter the proper input: ");
 
+    int finishedGameState;
     if (Constants.YES_DECISIONS_LIST.contains(playGameDecision)) {
       System.out.println("Continuing to game...");
+      waitTime(800);
+      finishedGameState = TicTacToeGame.startGame(input, inputName);
     } else {
-      System.out.println("Continuing to game anyways...");
+      finishedGameState = -999;
     }
 
-    int finishedGameState = TicTacToeGame.startGame(input, inputName);
-    System.out.printf("Finished game with result %d.%n", finishedGameState);
+    if (finishedGameState == -999) {
+      System.out.println("User skipped Tic-Tac-Toe...");
+    } else {
+      System.out.printf("Finished game with result %d.%n", finishedGameState);
+    }
     int randomArrayTestNumber = generateRandomNumber(100);
-
     int[] minimumNumberArray = {inputNum, finishedGameState, randomArrayTestNumber};
+
+    System.out.print("Processing array " + Arrays.toString(minimumNumberArray) + " ");
+    slowPrint("........", 400);
     System.out.println("Out of array with values " + Arrays.toString(minimumNumberArray));
     System.out.println("The minimum was " + findMinimumInArray(minimumNumberArray));
     System.out.println("The maximum was " + findMaximumInArray(minimumNumberArray));
@@ -157,14 +165,15 @@ public class IntegrationProject {
         findMaximumInArray(minimumNumberArray)));
 
     System.out.println();
+    waitTime(300);
 
     System.out.println("Comparing primitive types and max values.");
-    List<PrimitiveTypeModel> typesThanHandleGivenNum = PrimitiveTypeModel.getPrimitiveTypes()
+    List<PrimitiveTypeModel> typesThatHandleGivenNum = PrimitiveTypeModel.getPrimitiveTypes()
         .stream()
         .filter(PrimitiveTypeModel.canHandleNumber(500))
         .collect(Collectors.toList());
 
-    typesThanHandleGivenNum.forEach(type -> {
+    typesThatHandleGivenNum.forEach(type -> {
       System.out.printf("Type %s could fit %d%n", type.getType(), 500);
       waitTime(500);
     });
@@ -184,6 +193,8 @@ public class IntegrationProject {
             });
 
     input.close();
+    waitTime(1000);
+    System.out.println("\n");
     System.out.println("This marks the end of the Integration Project");
     System.out.println("Thanks for checking this out!");
     System.exit(0);
@@ -209,7 +220,7 @@ public class IntegrationProject {
    * @param time a period of time in milliseconds to wait. Waits a given period of time in
    *     milliseconds. Checked exception
    */
-  private static void waitTime(long time) {
+  public static void waitTime(long time) {
     try {
       Thread.sleep(time);
     } catch (InterruptedException e) {

@@ -59,7 +59,7 @@ public class PrimitiveTypeModel {
    *
    * @param num The number to check if it fits in an array.
    * @return True if the given number fits in the array. False otherwise and if the type can't
-   * handle the number at all, such as <em>boolean</em> or <em>char</em>
+   *     handle the number at all, such as <em>boolean</em> or <em>char</em>
    */
   public static Predicate<PrimitiveTypeModel> canHandleNumber(double num) {
     return type -> {

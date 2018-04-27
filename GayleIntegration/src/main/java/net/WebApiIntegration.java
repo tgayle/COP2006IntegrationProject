@@ -3,6 +3,7 @@ package src.main.java.net;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.concurrent.atomic.AtomicInteger;
+import src.main.java.IntegrationProject;
 import src.main.java.net.jsonmodels.SeriesJsonModel;
 
 public class WebApiIntegration {
@@ -13,10 +14,11 @@ public class WebApiIntegration {
    * Uses retrofit to connect to open Amiibo API and download information about them.
    *
    * @param callback A callback with the error code of the request. This is 0 if there is no error
-   * and a negative number if there is an issue.
+   *     and a negative number if there is an issue.
    */
   public static void runAmiiboApi(ApiCallbackInterface callback) {
-    AtomicInteger apiResult = new AtomicInteger(0); //use this to track the result of this api call.
+    //this value tracks the API call result
+    AtomicInteger apiResult = new AtomicInteger(0);
 
     System.out.println("Checking Amiibo Information");
     for (String gameSeries : series) {
@@ -37,11 +39,11 @@ public class WebApiIntegration {
               System.out.printf("\t%s: %s%n", expandRegionCode(date.getRegion()), strForDate);
             });
             System.out.println();
+            IntegrationProject.waitTime(300);
           });
           callback.onApiRequestComplete(apiResult.get(), null);
         }
       } catch (Exception throwable) {
-//        e.printStackTrace();
         apiResult.set(-1);
         callback.onApiRequestComplete(apiResult.get(), explainError(throwable));
       }
