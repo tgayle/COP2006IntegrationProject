@@ -38,7 +38,7 @@ public class TicTacToeBoard {
     System.out.println(boardCoordPreview);
   }
 
-  public char[][] getBoard() {
+  private char[][] getBoard() {
     return board.clone();
   }
 
@@ -125,12 +125,7 @@ public class TicTacToeBoard {
     for (int x = 0; x < boardLength; x++) {
       for (int y = 0; y < boardWidth; y++) {
         char currentPlace = getFromCoordinates(x, y);
-
-        if (currentPlace == 0) {
-          System.out.print(String.format(" %s  ", currentPlace));
-        } else {
-          System.out.print(String.format(" %s ", currentPlace));
-        }
+        System.out.print(String.format(" %s ", currentPlace));
 
         if (y != 2) {
           System.out.print("|");
