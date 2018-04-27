@@ -88,6 +88,7 @@ public class IntegrationProject {
         .format(DateTimeFormatter.ofPattern("MMMM dd yyyy hh:mm:ssa").withZone(
             ZoneId.systemDefault()));
     System.out.println("Current Time: " + currentTimeAsString);
+    waitTime(1500);
 
     System.out.println("Magic Random Number Generator: " + generateRandomNumber(6)
         + " out of 6.");
@@ -224,7 +225,7 @@ public class IntegrationProject {
     try {
       Thread.sleep(time);
     } catch (InterruptedException e) {
-      e.printStackTrace();
+      //Don't do anything with error and don't print out the error to the user.
     }
   }
 
