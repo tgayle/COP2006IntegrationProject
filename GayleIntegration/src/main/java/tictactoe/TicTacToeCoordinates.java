@@ -1,4 +1,4 @@
-package src.tictactoe;
+package src.main.java.tictactoe;
 
 /*
  * Travis Gayle
@@ -6,21 +6,21 @@ package src.tictactoe;
  * Wrapper for int[][] to represent coordinates on TicTacToeBoard
  */
 public class TicTacToeCoordinates {
-
-  private int x;
-  private int y;
-
+  
+  private int boardXCoordinate;
+  private int boardYCoordinate;
+  
   TicTacToeCoordinates(int x, int y) {
-    this.x = x;
-    this.y = y;
+    this.boardXCoordinate = x;
+    this.boardYCoordinate = y;
   }
-
+  
   public int getX() {
-    return x;
+    return boardXCoordinate;
   }
-
+  
   public int getY() {
-    return y;
+    return boardYCoordinate;
   }
-
+  
 }

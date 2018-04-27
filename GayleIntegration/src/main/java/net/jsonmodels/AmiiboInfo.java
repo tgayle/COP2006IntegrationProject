@@ -1,29 +1,29 @@
-package src.net.jsonmodels;
+package src.main.java.net.jsonmodels;
 
 public class AmiiboInfo {
-
+  
   private String amiiboSeries;
   private String gameSeries;
   private String name;
-  private AmiiboReleaseDates release;
+  private AmiiboReleaseDatesModel release;
   private String type;
-
+  
   public String getAmiiboSeries() {
     return amiiboSeries;
   }
-
+  
   public String getGameSeries() {
     return gameSeries;
   }
-
+  
   public String getName() {
     return name;
   }
-
-  public AmiiboReleaseDates getReleaseDates() {
+  
+  public AmiiboReleaseDatesModel getReleaseDates() {
     return release;
   }
-
+  
   public String getType() {
     return type;
   }

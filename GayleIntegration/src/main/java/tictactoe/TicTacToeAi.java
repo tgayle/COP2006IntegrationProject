@@ -1,4 +1,4 @@
-package src.tictactoe;
+package src.main.java.tictactoe;
 
 /*
  * Travis Gayle
@@ -10,29 +10,35 @@ package src.tictactoe;
  */
 
 import java.util.List;
-import src.IntegrationProject;
+import src.main.java.IntegrationProject;
 
 public class TicTacToeAi extends TicTacToePlayer {
-
+  
   public TicTacToeAi(String name, char representingLetter) {
     super(name, representingLetter, true);
-
+    
   }
-
+  
   TicTacToeAi() {
     super("AI", 'O', true);
   }
-
+  
   @Override
   public boolean isAi() {
     return true;
   }
-
+  
+  /**
+   * Randomly chooses a spot on the board to make a move from the available free areas.
+   *
+   * @param board The board to make a move on.
+   * @return a TicTacToeCoordinates that specifies where a move should be made.
+   */
   public TicTacToeCoordinates makeMove(TicTacToeBoard board) {
     List<TicTacToeCoordinates> freeAreas = board.getAvailableSpots();
     int selectedIndex = IntegrationProject.getRandom().nextInt(freeAreas.size());
     return freeAreas.get(selectedIndex);
-
+    
   }
-
+  
 }
