@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Constants {
-  
+
   private static final String[] YES_DECISIONS = new String[]{"y", "yes"};
   public static final List<String> YES_DECISIONS_LIST = Collections
       .unmodifiableList(Arrays.asList(YES_DECISIONS));

@@ -6,15 +6,15 @@ package src.main.java.tictactoe;
  * class implementing it will have these methods. </p>
  */
 public interface PlayerInterface {
-  
+
   int incrementScore();
-  
+
   int decrementScore();
-  
+
   int getScore();
-  
+
   String getName();
-  
+
   void setName(String newName);
-  
+
 }

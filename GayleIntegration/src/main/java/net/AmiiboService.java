@@ -7,10 +7,10 @@ import src.main.java.net.jsonmodels.AmiiboJsonModel;
 import src.main.java.net.jsonmodels.SeriesJsonModel;
 
 public interface AmiiboService {
-  
+
   @GET("amiibo")
   Call<AmiiboJsonModel> getAmiibo(@Query("name") String name);
-  
+
   @GET("amiibo")
   Call<SeriesJsonModel> getSeries(@Query("gameseries") String series);
 }

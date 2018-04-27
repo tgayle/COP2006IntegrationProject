@@ -9,9 +9,9 @@ public class Networking {
       .baseUrl("http://www.amiiboapi.com/api/")
       .addConverterFactory(GsonConverterFactory.create())
       .build();
-  
+
   private static AmiiboService ammiboService = amiiboRetrofit.create(AmiiboService.class);
-  
+
   public static AmiiboService getAmiiboService() {
     return ammiboService;
   }

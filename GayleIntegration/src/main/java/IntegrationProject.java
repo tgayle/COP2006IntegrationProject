@@ -22,7 +22,7 @@ import src.main.java.tictactoe.TicTacToeGame;
  */
 
 public class IntegrationProject {
-  
+
   private static Scanner input = new Scanner(System.in, "UTF-8");
   private static Random random = new Random();
 
@@ -36,12 +36,12 @@ public class IntegrationProject {
     random.setSeed(System.currentTimeMillis());
 
     System.out.println("Hello from the integration project!");
-    
+
     System.out.print("Loading");
     //Make a call to the slowPrint method and to print the message bellow over 1600 milliseconds.
     slowPrint("...........", 1600);
     // Slowly print this given string over 1.6 seconds.
-    
+
     System.out.println("Please enter your name for login: ");
     String inputName = null;
     {
@@ -58,10 +58,9 @@ public class IntegrationProject {
         }
       }
     }
-    
+
     System.out.println("Please enter a number of no particular relevance: ");
     int inputNum = 0;
-    
     while (!input.hasNextInt()) { //Repeat until the user enters a number.
       try {
         inputNum = input.nextInt();
@@ -70,36 +69,36 @@ public class IntegrationProject {
         input.next();
       }
     }
-    
+
     input.nextLine(); // Move to next line to take inputs normally in the future.
-    
+
     System.out.println("System debugging necessary. Press enter to continue.");
     input.nextLine();
-    
+
     // Print the user in an array format.
     System.out.print("USER: ");
     //Call the printStringAsArray method with the name the user gave in all uppercase over 600ms
     printStringAsArray(inputName.toUpperCase(), 600L);
-    
+
     String reversedName = new StringBuilder(inputName.toUpperCase()).reverse().toString();
     printStringAsArray(reversedName, 600L);
-    
+
     LocalDateTime currentTime = LocalDateTime.now(ZoneId.systemDefault());
     String currentTimeAsString = currentTime
         .format(DateTimeFormatter.ofPattern("MMMM dd yyyy hh:mm:ssa").withZone(
             ZoneId.systemDefault()));
     System.out.println("Current Time: " + currentTimeAsString);
-    
+
     System.out.println("Magic Random Number Generator: " + generateRandomNumber(6)
         + " out of 6.");
     System.out.println("Number of no particular relevance over 2.24 equals "
         + inputNum / 2.24d);
-    
+
     System.out.println("Beginning core JRE check:");
     waitTime(500L);
     System.out.println("Primitive types check:");
     System.out.println();
-    
+
     /* Print out primitive data types and their ranges.
      * byte has range from -128 to 127
      * short has range from -32768 to 32767
@@ -116,39 +115,39 @@ public class IntegrationProject {
       System.out.println(type.getType()
           + String.format(" range was [%s, %s]%n", type.getMinValue(), type.getMaxValue()));
     }
-    
+
     System.out.println("Primitive check complete.");
     // End primitive datatype check.
-    
+
     System.out.println();
     System.out.println("Casting objects exercise: ");
-    
+
     Number normalNumber = new Number(54949489498L);
-    
+
     System.out.print("Normal Number class: ");
     printNumber(normalNumber);
-    
+
     ImaginaryNumber imagNumber = new ImaginaryNumber(normalNumber, 5489);
     System.out.print("Imaginary Number class: ");
     printNumber(imagNumber);
-    
+
     waitTime(1200L);
     System.out.println("Would you like to play a game?");
     System.out.println("Yes or No?: ");
-    
+
     String playGameDecision = waitForCertainInput(Constants.CONFIRM_DECLINE_OPTIONS_LIST,
         "Please enter the proper input: ");
-    
-    if (Arrays.asList(Constants.YES_DECISIONS_LIST).contains(playGameDecision)) {
+
+    if (Constants.YES_DECISIONS_LIST.contains(playGameDecision)) {
       System.out.println("Continuing to game...");
     } else {
       System.out.println("Continuing to game anyways...");
     }
-    
+
     int finishedGameState = TicTacToeGame.startGame(input, inputName);
     System.out.printf("Finished game with result %d.%n", finishedGameState);
     int randomArrayTestNumber = generateRandomNumber(100);
-    
+
     int[] minimumNumberArray = {inputNum, finishedGameState, randomArrayTestNumber};
     System.out.println("Out of array with values " + Arrays.toString(minimumNumberArray));
     System.out.println("The minimum was " + findMinimumInArray(minimumNumberArray));
@@ -156,38 +155,40 @@ public class IntegrationProject {
     System.out.println("The sum of the array was " + sumArray(minimumNumberArray));
     System.out.println("Index of the largest number is " + getIndexOf(minimumNumberArray,
         findMaximumInArray(minimumNumberArray)));
-    
+
     System.out.println();
-    
+
     System.out.println("Comparing primitive types and max values.");
     List<PrimitiveTypeModel> typesThanHandleGivenNum = PrimitiveTypeModel.getPrimitiveTypes()
         .stream()
         .filter(PrimitiveTypeModel.canHandleNumber(500))
         .collect(Collectors.toList());
-    
+
     typesThanHandleGivenNum.forEach(type -> {
       System.out.printf("Type %s could fit %d%n", type.getType(), 500);
       waitTime(500);
     });
-    
+
     System.out.println();
     System.out.println("Proceeding to get Nintendo Amiibo Information Online");
     System.out.println("Press enter to continue");
     input.nextLine();
 
-      WebApiIntegration
-          .runAmiiboApi(
-              (result, errMsg) -> {
-                System.out.println("Amiibo API Request ended with result " + result);
-                if (errMsg != null) {
-                  System.out.println(errMsg);
-                }
-              });
+    WebApiIntegration
+        .runAmiiboApi(
+            (result, errMsg) -> {
+              System.out.println("Amiibo API Request ended with result " + result);
+              if (errMsg != null) {
+                System.out.println(errMsg);
+              }
+            });
 
     input.close();
+    System.out.println("This marks the end of the Integration Project");
+    System.out.println("Thanks for checking this out!");
     System.exit(0);
   }
-  
+
   /**
    * Slowly prints a string over a period of time.
    *
@@ -201,7 +202,7 @@ public class IntegrationProject {
     }
     System.out.println();
   }
-  
+
   /**
    * Uses Thread.sleep to wait a period of time before continuing running.
    *
@@ -215,31 +216,31 @@ public class IntegrationProject {
       e.printStackTrace();
     }
   }
-  
+
   /**
    * Creates a array representation of a string, each character going to this 'array'
    * consecutively.
    *
-   * @param str String to convert to an array format. Example: "Hello" would result in "[H, e,
-   *     l, l, o]"
+   * @param str String to convert to an array format. Example: "Hello" would result in
+   *     "[H, e, l, l, o]"
    * @return The string in an array form.
    */
   private static String convertStringToArray(String str) {
     StringBuilder userMessage = new StringBuilder("[");
-    
+
     for (int x = 0; x < str.length(); x++) { // Loop over each character and print it.
       char currentLetter = str.charAt(x);
-      
+
       if (x != str.length() - 1) {
         userMessage.append(currentLetter).append(", ");
       } else {
         userMessage.append(currentLetter).append("]");
       }
     }
-    
+
     return userMessage.toString();
   }
-  
+
   /**
    * Prints a string as an array over a given period of time.
    *
@@ -249,7 +250,7 @@ public class IntegrationProject {
   private static void printStringAsArray(String str, long time) {
     slowPrint(convertStringToArray(str), time);
   }
-  
+
   /**
    * Asks the user to enter something and repeatedly asks again if the response is not in the list
    * of acceptable sentinel phrases.
@@ -261,18 +262,18 @@ public class IntegrationProject {
   public static String waitForCertainInput(List<String> possibleExits,
       String responseOnIncorrectInput) {
     String scanInput = input.nextLine().toLowerCase().trim();
-    
+
     while (!possibleExits.contains(scanInput)) {
-      
+
       if (responseOnIncorrectInput.length() != 0) {
         System.out.println(responseOnIncorrectInput);
       }
-      
+
       scanInput = input.nextLine().toLowerCase().trim();
     }
     return scanInput;
   }
-  
+
   /**
    * Generates a random number from a range of 0 to a given maximum number.
    *
@@ -282,7 +283,7 @@ public class IntegrationProject {
   public static int generateRandomNumber(int numberOfSides) {
     return random.nextInt(numberOfSides) + 1;
   }
-  
+
   /**
    * Example to show casting objects between instances of Number and ImaginaryNumber. Prints out the
    * number itself regardless of if it's a normal Number or ImaginaryNumber in the proper format.
@@ -293,21 +294,21 @@ public class IntegrationProject {
   public static String printNumber(Number num) {
     // Cast number back to Imaginary to print it
     // properly?
-    
+
     if (num instanceof ImaginaryNumber) {
       System.out.println(num.add(num, new Number(123)));
       return ((ImaginaryNumber) num).toString();
-      
+
     } else {
       System.out.println(num.toString());
       return num.toString();
     }
   }
-  
+
   public static Scanner getScanner() {
     return input;
   }
-  
+
   public static Random getRandom() {
     return random;
   }
@@ -316,7 +317,7 @@ public class IntegrationProject {
   All these classes are static since they are methods of the class, not of the object.
   You also can't call a non-static method from a method that's static.
    */
-  
+
   /**
    * Find the minimum value in an array.
    *
@@ -325,7 +326,7 @@ public class IntegrationProject {
    */
   public static int findMinimumInArray(int[] array) {
     int min = array[0];
-    
+
     for (int i = 0; i < array.length; i++) {
       if (min > array[i]) {
         min = array[i];
@@ -333,7 +334,7 @@ public class IntegrationProject {
     }
     return min;
   }
-  
+
   /**
    * Find the maximum value in an array.
    *
@@ -342,7 +343,7 @@ public class IntegrationProject {
    */
   public static int findMaximumInArray(int[] array) {
     int max = array[0];
-    
+
     for (int i = 0; i < array.length; i++) {
       if (max < array[i]) {
         max = array[i];
@@ -350,7 +351,7 @@ public class IntegrationProject {
     }
     return max;
   }
-  
+
   /**
    * Calculates the sum of all the values in the array.
    *
@@ -364,7 +365,7 @@ public class IntegrationProject {
     }
     return sum;
   }
-  
+
   /**
    * Finds the index of a given value within an array of integers.
    *
@@ -380,5 +381,5 @@ public class IntegrationProject {
     }
     return -1;
   }
-  
+
 }

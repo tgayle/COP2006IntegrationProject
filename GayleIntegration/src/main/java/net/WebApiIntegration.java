@@ -6,22 +6,23 @@ import java.util.concurrent.atomic.AtomicInteger;
 import src.main.java.net.jsonmodels.SeriesJsonModel;
 
 public class WebApiIntegration {
-  
+
   private static String[] series = {"0x000"}; //Array of series to get information about.
-  
+
   /**
    * Uses retrofit to connect to open Amiibo API and download information about them.
    *
-   * @param callback A callback with the error code of the request. This is 0 if there is no
-   *     error and a negative number if there is an issue.
+   * @param callback A callback with the error code of the request. This is 0 if there is no error
+   * and a negative number if there is an issue.
    */
   public static void runAmiiboApi(ApiCallbackInterface callback) {
     AtomicInteger apiResult = new AtomicInteger(0); //use this to track the result of this api call.
-    
+
     System.out.println("Checking Amiibo Information");
     for (String gameSeries : series) {
       try {
-        SeriesJsonModel model = Networking.getAmiiboService().getSeries(gameSeries).execute().body();
+        SeriesJsonModel model = Networking.getAmiiboService().getSeries(gameSeries).execute()
+            .body();
 
         if (model != null) {
           model.getAmiibos().forEach(amiibo -> {
@@ -46,7 +47,7 @@ public class WebApiIntegration {
       }
     }
   }
-  
+
   /*
   Error 0: No issues
   Error -1: Unknown issue
@@ -64,7 +65,7 @@ public class WebApiIntegration {
       return "There was an issue loading from the API. " + throwable.getClass();
     }
   }
-  
+
   private static String explainError(int errorCode) {
     switch (errorCode) {
       case 0:
@@ -79,7 +80,7 @@ public class WebApiIntegration {
         return "There may have been an error but this error code does not exist: " + errorCode;
     }
   }
-  
+
   private static String expandRegionCode(String code) {
     switch (code) {
       case "au":
@@ -94,5 +95,5 @@ public class WebApiIntegration {
         return "Unknown Region: " + code;
     }
   }
-  
+
 }
