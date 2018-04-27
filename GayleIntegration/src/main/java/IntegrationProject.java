@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 import src.main.java.net.WebApiIntegration;
 import src.main.java.number.ImaginaryNumber;
 import src.main.java.number.Number;
-import src.main.java.tictactoe.TicTacToeGame;
 
 /*
  * Travis Gayle
@@ -25,7 +24,7 @@ public class IntegrationProject {
   
   private static Scanner input = new Scanner(System.in, "UTF-8");
   private static Random random = new Random();
-  
+
   /**
    * Main entry to integration project and run's the entire project. <br> Includes demonstration of
    * skills and things learned in COP 2006
@@ -34,7 +33,7 @@ public class IntegrationProject {
    */
   public static void main(String[] args) {
     random.setSeed(System.currentTimeMillis());
-    
+
     System.out.println("Hello from the integration project!");
     
     System.out.print("Loading");
@@ -145,7 +144,7 @@ public class IntegrationProject {
       System.out.println("Continuing to game anyways...");
     }
     
-    int finishedGameState = TicTacToeGame.startGame(input, inputName);
+    int finishedGameState = 0; //TicTacToeGame.startGame(input, inputName);
     System.out.printf("Finished game with result %d.%n", finishedGameState);
     int randomArrayTestNumber = generateRandomNumber(100);
     
@@ -167,22 +166,23 @@ public class IntegrationProject {
     
     typesThanHandleGivenNum.forEach(type -> {
       System.out.printf("Type %s could fit %d%n", type.getType(), 500);
+      waitTime(500);
     });
     
     System.out.println();
     System.out.println("Proceeding to get Nintendo Amiibo Information Online");
     System.out.println("Press enter to continue");
     input.nextLine();
-    
-    WebApiIntegration
-        .runAmiiboApi(
-            (result, errMsg) -> {
-              System.out.println("Amiibo API Request ended with result " + result);
-              if (errMsg != null) {
-                System.out.println(errMsg);
-              }
-            });
-    
+
+      WebApiIntegration
+          .runAmiiboApi(
+              (result, errMsg) -> {
+                System.out.println("Amiibo API Request ended with result " + result);
+                if (errMsg != null) {
+                  System.out.println(errMsg);
+                }
+              });
+
     input.close();
     System.exit(0);
   }
@@ -210,7 +210,7 @@ public class IntegrationProject {
    */
   public static void waitTime(long time) {
     try {
-      Thread.sleep(time); //time
+      Thread.sleep(0); //time //FIXME
     } catch (InterruptedException e) {
       e.printStackTrace();
     }

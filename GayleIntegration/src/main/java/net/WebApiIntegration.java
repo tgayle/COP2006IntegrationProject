@@ -1,10 +1,8 @@
 package src.main.java.net;
 
+import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.concurrent.atomic.AtomicInteger;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import src.main.java.net.jsonmodels.SeriesJsonModel;
 
 public class WebApiIntegration {
@@ -22,38 +20,61 @@ public class WebApiIntegration {
     
     System.out.println("Checking Amiibo Information");
     for (String gameSeries : series) {
-      Networking.getAmiiboService().getSeries(gameSeries)
-          .enqueue(new Callback<SeriesJsonModel>() {
-            @Override
-            public void onResponse(Call<SeriesJsonModel> call, Response<SeriesJsonModel> response) {
-              SeriesJsonModel model = response.body();
-              
-              if (model != null) {
-                model.getAmiibos().forEach(amiibo -> {
-                  System.out.printf("Found %s from %s%n", amiibo.getName(), amiibo.getGameSeries());
-                  System.out.println("Type: " + amiibo.getType());
-                  System.out.println("Amiibo Series: " + amiibo.getAmiiboSeries());
-                  System.out.println("Release Dates: ");
-                  
-                  amiibo.getReleaseDates().getAllReleaseDates().forEach(date -> {
-                    String strForDate =
-                        (date.getDate() == null) ? "Never Released" : date.getDate();
-                    System.out.printf("\t%s: %s%n", expandRegionCode(date.getRegion()), strForDate);
-                  });
-                  System.out.println();
-                });
-                callback.onApiRequestComplete(apiResult.get(), null);
-              }
-            }
-            
-            @Override
-            public void onFailure(Call<SeriesJsonModel> call, Throwable throwable) {
-              apiResult.set(-1);
-              callback.onApiRequestComplete(apiResult.get(), explainError(throwable));
-            }
+      try {
+        SeriesJsonModel model = Networking.getAmiiboService().getSeries(gameSeries).execute().body();
+
+        if (model != null) {
+          model.getAmiibos().forEach(amiibo -> {
+            System.out.printf("Found %s from %s%n", amiibo.getName(), amiibo.getGameSeries());
+            System.out.println("Type: " + amiibo.getType());
+            System.out.println("Amiibo Series: " + amiibo.getAmiiboSeries());
+            System.out.println("Release Dates: ");
+
+            amiibo.getReleaseDates().getAllReleaseDates().forEach(date -> {
+              String strForDate =
+                  (date.getDate() == null) ? "Never Released" : date.getDate();
+              System.out.printf("\t%s: %s%n", expandRegionCode(date.getRegion()), strForDate);
+            });
+            System.out.println();
           });
+          callback.onApiRequestComplete(apiResult.get(), null);
+        }
+      } catch (Exception throwable) {
+//        e.printStackTrace();
+        apiResult.set(-1);
+        callback.onApiRequestComplete(apiResult.get(), explainError(throwable));
+      }
+//      Networking.getAmiiboService().getSeries(gameSeries)
+//          .enqueue(new Callback<SeriesJsonModel>() {
+//            @Override
+//            public void onResponse(Call<SeriesJsonModel> call, Response<SeriesJsonModel> response) {
+//              SeriesJsonModel model = response.body();
+//
+//              if (model != null) {
+//                model.getAmiibos().forEach(amiibo -> {
+//                  System.out.printf("Found %s from %s%n", amiibo.getName(), amiibo.getGameSeries());
+//                  System.out.println("Type: " + amiibo.getType());
+//                  System.out.println("Amiibo Series: " + amiibo.getAmiiboSeries());
+//                  System.out.println("Release Dates: ");
+//
+//                  amiibo.getReleaseDates().getAllReleaseDates().forEach(date -> {
+//                    String strForDate =
+//                        (date.getDate() == null) ? "Never Released" : date.getDate();
+//                    System.out.printf("\t%s: %s%n", expandRegionCode(date.getRegion()), strForDate);
+//                  });
+//                  System.out.println();
+//                });
+//                callback.onApiRequestComplete(apiResult.get(), null);
+//              }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<SeriesJsonModel> call, Throwable throwable) {
+//              apiResult.set(-1);
+//              callback.onApiRequestComplete(apiResult.get(), explainError(throwable));
+//            }
+//          });
     }
-    
   }
   
   /*
@@ -66,6 +87,8 @@ public class WebApiIntegration {
       return explainError(0);
     } else if (throwable instanceof UnknownHostException) {
       return explainError(-2);
+    } else if (throwable instanceof IOException) {
+      return explainError(-3);
     } else {
       return "There was an issue loading from the API. " + throwable.getClass();
     }
@@ -78,6 +101,7 @@ public class WebApiIntegration {
       case -1:
         return "There was an unknown issue while loading from the API.";
       case -2:
+      case -3:
         return "There was an issue loading from the API. "
             + "Check your internet connection or DNS settings.";
       default:
