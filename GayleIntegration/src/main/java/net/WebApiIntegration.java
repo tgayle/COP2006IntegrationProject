@@ -44,36 +44,6 @@ public class WebApiIntegration {
         apiResult.set(-1);
         callback.onApiRequestComplete(apiResult.get(), explainError(throwable));
       }
-//      Networking.getAmiiboService().getSeries(gameSeries)
-//          .enqueue(new Callback<SeriesJsonModel>() {
-//            @Override
-//            public void onResponse(Call<SeriesJsonModel> call, Response<SeriesJsonModel> response) {
-//              SeriesJsonModel model = response.body();
-//
-//              if (model != null) {
-//                model.getAmiibos().forEach(amiibo -> {
-//                  System.out.printf("Found %s from %s%n", amiibo.getName(), amiibo.getGameSeries());
-//                  System.out.println("Type: " + amiibo.getType());
-//                  System.out.println("Amiibo Series: " + amiibo.getAmiiboSeries());
-//                  System.out.println("Release Dates: ");
-//
-//                  amiibo.getReleaseDates().getAllReleaseDates().forEach(date -> {
-//                    String strForDate =
-//                        (date.getDate() == null) ? "Never Released" : date.getDate();
-//                    System.out.printf("\t%s: %s%n", expandRegionCode(date.getRegion()), strForDate);
-//                  });
-//                  System.out.println();
-//                });
-//                callback.onApiRequestComplete(apiResult.get(), null);
-//              }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<SeriesJsonModel> call, Throwable throwable) {
-//              apiResult.set(-1);
-//              callback.onApiRequestComplete(apiResult.get(), explainError(throwable));
-//            }
-//          });
     }
   }
   
@@ -81,6 +51,7 @@ public class WebApiIntegration {
   Error 0: No issues
   Error -1: Unknown issue
   Error -2: Unknown Host (No internet/DNS Error)
+  Error -3: IOException (Likely an internet issue)
    */
   private static String explainError(Throwable throwable) {
     if (throwable == null) {

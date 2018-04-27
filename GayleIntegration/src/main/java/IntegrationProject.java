@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import src.main.java.net.WebApiIntegration;
 import src.main.java.number.ImaginaryNumber;
 import src.main.java.number.Number;
+import src.main.java.tictactoe.TicTacToeGame;
 
 /*
  * Travis Gayle
@@ -144,7 +145,7 @@ public class IntegrationProject {
       System.out.println("Continuing to game anyways...");
     }
     
-    int finishedGameState = 0; //TicTacToeGame.startGame(input, inputName);
+    int finishedGameState = TicTacToeGame.startGame(input, inputName);
     System.out.printf("Finished game with result %d.%n", finishedGameState);
     int randomArrayTestNumber = generateRandomNumber(100);
     
@@ -193,13 +194,12 @@ public class IntegrationProject {
    * @param message The string to print over the given period of time.
    * @param time A period of time in milliseconds to spend printing the entire string.
    */
-  public static void slowPrint(String message, long time) {
+  private static void slowPrint(String message, long time) {
     for (int i = 0; i < message.length(); i++) {
       System.out.print(message.charAt(i));
       waitTime(time / message.length());
     }
     System.out.println();
-    
   }
   
   /**
@@ -208,9 +208,9 @@ public class IntegrationProject {
    * @param time a period of time in milliseconds to wait. Waits a given period of time in
    *     milliseconds. Checked exception
    */
-  public static void waitTime(long time) {
+  private static void waitTime(long time) {
     try {
-      Thread.sleep(0); //time //FIXME
+      Thread.sleep(time);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
@@ -224,16 +224,16 @@ public class IntegrationProject {
    *     l, l, o]"
    * @return The string in an array form.
    */
-  public static String convertStringToArray(String str) {
+  private static String convertStringToArray(String str) {
     StringBuilder userMessage = new StringBuilder("[");
     
     for (int x = 0; x < str.length(); x++) { // Loop over each character and print it.
       char currentLetter = str.charAt(x);
       
       if (x != str.length() - 1) {
-        userMessage.append(currentLetter + ", ");
+        userMessage.append(currentLetter).append(", ");
       } else {
-        userMessage.append(currentLetter + "]");
+        userMessage.append(currentLetter).append("]");
       }
     }
     
@@ -246,7 +246,7 @@ public class IntegrationProject {
    * @param str The string to print over a period of time.
    * @param time The amount of time, in milliseconds to take printing the string.
    */
-  public static void printStringAsArray(String str, long time) {
+  private static void printStringAsArray(String str, long time) {
     slowPrint(convertStringToArray(str), time);
   }
   

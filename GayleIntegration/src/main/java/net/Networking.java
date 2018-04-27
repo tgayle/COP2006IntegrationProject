@@ -4,16 +4,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Networking {
-  
-  //  private static Networking ourInstance = new Networking();
-  //
-  //  public static Networking get() {
-  //    return ourInstance;
-  //  }
-  //
-  //  private Networking() {
-  //  }
-  
+
   private static Retrofit amiiboRetrofit = new Retrofit.Builder()
       .baseUrl("http://www.amiiboapi.com/api/")
       .addConverterFactory(GsonConverterFactory.create())
