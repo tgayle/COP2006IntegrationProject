@@ -139,7 +139,7 @@ public class IntegrationProject {
     String playGameDecision = waitForCertainInput(Constants.CONFIRM_DECLINE_OPTIONS_LIST,
         "Please enter the proper input: ");
     
-    if (Arrays.asList(Constants.YES_DECISIONS_LIST).contains(playGameDecision)) {
+    if (Constants.YES_DECISIONS_LIST.contains(playGameDecision)) {
       System.out.println("Continuing to game...");
     } else {
       System.out.println("Continuing to game anyways...");
