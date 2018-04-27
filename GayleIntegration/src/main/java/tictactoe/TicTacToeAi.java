@@ -13,21 +13,21 @@ import java.util.List;
 import src.main.java.IntegrationProject;
 
 public class TicTacToeAi extends TicTacToePlayer {
-  
+
   public TicTacToeAi(String name, char representingLetter) {
     super(name, representingLetter, true);
-    
+
   }
-  
+
   TicTacToeAi() {
     super("AI", 'O', true);
   }
-  
+
   @Override
   public boolean isAi() {
     return true;
   }
-  
+
   /**
    * Randomly chooses a spot on the board to make a move from the available free areas.
    *
@@ -38,7 +38,7 @@ public class TicTacToeAi extends TicTacToePlayer {
     List<TicTacToeCoordinates> freeAreas = board.getAvailableSpots();
     int selectedIndex = IntegrationProject.getRandom().nextInt(freeAreas.size());
     return freeAreas.get(selectedIndex);
-    
+
   }
-  
+
 }
