@@ -3,7 +3,8 @@ package src.main.java.number;
 import java.math.BigDecimal;
 
 /**
- * Created by Travis on 2/10/2018. Class to model Numbers and for showing example of casting
+ * Travis Gayle
+ * Class to model Numbers and for showing example of casting
  * objects. Also a wrapper of BigDecimal
  */
 

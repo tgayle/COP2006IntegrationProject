@@ -3,17 +3,31 @@ package src.main.java.net;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.concurrent.atomic.AtomicInteger;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import src.main.java.IntegrationProject;
 import src.main.java.net.jsonmodels.SeriesJsonModel;
+
+/*
+ * Travis Gayle
+ * Integration Project
+ * Class for using Retrofit to connect to Amiibo API
+ */
 
 public class WebApiIntegration {
 
   private static String[] series = {"0x000"}; //Array of series to get information about.
+  private static Retrofit amiiboRetrofit = new Retrofit.Builder()
+      .baseUrl("http://www.amiiboapi.com/api/")
+      .addConverterFactory(GsonConverterFactory.create())
+      .build();
+  private static AmiiboService ammiboService = amiiboRetrofit.create(AmiiboService.class);
 
   /**
    * Uses retrofit to connect to open Amiibo API and download information about them.
    *
-   * @param callback A callback with the error code of the request. This is 0 if there is no error
+   * @param callback A callback with the error code of the request. This is 0 if there is no
+   *     error
    *     and a negative number if there is an issue.
    */
   public static void runAmiiboApi(ApiCallbackInterface callback) {
@@ -23,7 +37,7 @@ public class WebApiIntegration {
     System.out.println("Checking Amiibo Information");
     for (String gameSeries : series) {
       try {
-        SeriesJsonModel model = Networking.getAmiiboService().getSeries(gameSeries).execute()
+        SeriesJsonModel model = ammiboService.getSeries(gameSeries).execute()
             .body();
 
         if (model != null) {

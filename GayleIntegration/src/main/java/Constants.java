@@ -4,6 +4,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/*
+ * Travis Gayle
+ * Class to hold commonly used constants and variables.
+ */
 public class Constants {
 
   private static final String[] YES_DECISIONS = new String[]{"y", "yes"};

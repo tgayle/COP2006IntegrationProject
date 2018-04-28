@@ -220,7 +220,7 @@ public class TicTacToeBoard {
    * Searches the board for a winner in any place.
    *
    * @return A char that is the representation of the player who won. <p>Returns u\0000 if there is
-   * no winner.</p>
+   *     no winner.</p>
    */
   public char findWinner() {
     char[] winners = {

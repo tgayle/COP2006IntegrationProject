@@ -6,6 +6,10 @@ import retrofit2.http.Query;
 import src.main.java.net.jsonmodels.AmiiboJsonModel;
 import src.main.java.net.jsonmodels.SeriesJsonModel;
 
+/*
+ * Travis Gayle
+ * Interface for Retrofit to generate connections to API
+ */
 public interface AmiiboService {
 
   @GET("amiibo")

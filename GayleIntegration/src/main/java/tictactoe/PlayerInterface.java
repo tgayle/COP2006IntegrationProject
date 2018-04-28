@@ -1,6 +1,7 @@
 package src.main.java.tictactoe;
 
-/**
+/*
+ * Travis Gayle
  * Player Interface for representing a player in a game. At the very least, a player object will
  * have a way to get current score and name <p> This interface acts as a contact, ensuring that any
  * class implementing it will have these methods. </p>

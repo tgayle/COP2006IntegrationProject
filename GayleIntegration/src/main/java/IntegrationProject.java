@@ -17,7 +17,7 @@ import src.main.java.tictactoe.TicTacToeGame;
 /*
  * Travis Gayle
  * Integration Project
- * Main file to runAmiiboAPI.
+ * Main entry file to Integration Project
  * Demonstration of concepts learned in COP2006
  */
 
@@ -233,8 +233,9 @@ public class IntegrationProject {
    * Creates a array representation of a string, each character going to this 'array'
    * consecutively.
    *
-   * @param str String to convert to an array format. Example: "Hello" would result in
-   *     "[H, e, l, l, o]"
+   * @param str String to convert to an array format. Example: "Hello" would result in "[H, e,
+   *     l, l,
+   *     o]"
    * @return The string in an array form.
    */
   private static String convertStringToArray(String str) {
